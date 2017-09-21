@@ -118,56 +118,6 @@ function copyRecordComments(vCapId,vTargetId) {
 	}
 }
 
-/**
- *  Copies all record comments from source to target record.
- *  @memberof INCLUDES_CUSTOM
- *  @param vCapId - capIdModel of the source record 
- *  @param vTargetId - capIdModel of the target record
- */
-function copyRecordComments(vCapId,vTargetId) {
-
-	try {
-		//create commentScriptModel to get existing comments
-		var capCommentScriptModel= aa.cap.createCapCommentScriptModel();
-		capCommentScriptModel.setCapIDModel(vCapId);
-		capCommentScriptModel.setCommentType("APP LEVEL COMMENT");
-		var capCommentModel=capCommentScriptModel.getCapCommentModel();
-
-		// get comments from source capId
-		var getCommentResult = aa.cap.getCapComment(capCommentModel);
-		if(getCommentResult.getSuccess()){
-			var comments = getCommentResult.getOutput();
-			for(c in comments) {
-				var comment = comments[c];
-
-				//copy the comment to the target record
-				var capCommentModel=capCommentScriptModel.getCapCommentModel();
-				//exploreObject(capCommentModel);
-				capCommentModel.setCapIDModel(vTargetId);
-				capCommentModel.setCommentType("APP LEVEL COMMENT");
-				capCommentModel.setSynopsis("");
-				capCommentModel.setText(comment.getText());
-				capCommentModel.setAuditUser(comment.getAuditUser());
-				capCommentModel.setAuditStatus("A");
-
-				capCommentModel.setAuditDate(convertDate(comment.getAuditDate()));
-				var copyCommentResult = aa.cap.createCapComment(capCommentModel);
-				if(copyCommentResult.getSuccess()) {
-					logDebug("Comment copied successfully");
-				}
-				else {
-					logDebug("Error copying comment: " + copyCommentResult.getErrorMessage());
-					return false;
-				}
-			}
-		}
-
-	}
-	catch(err) {
-		logDebug("**ERROR in copyRecordComments(): " + err);
-	}
-}
-
 
 /**
  *  Copies all attachments between two records.
@@ -237,36 +187,6 @@ function copyDocuments(pFromCapId, pToCapId) {
     }
 }
 
-
-function getLatestScheduledDate()
-{	
-	var inspResultObj = aa.inspection.getInspections(capId);
-	if (inspResultObj.getSuccess())
-	{
-		inspList = inspResultObj.getOutput();
-        var array=new Array();  
-        var j=0;		
-		for (i in inspList)
-        {		    			 				
-			if (inspList[i].getInspectionStatus().equals("Scheduled"))
-			{	                   					
-				array[j++]=aa.util.parseDate(inspList[i].getInspection().getScheduledDate());				
-			}
-		}
-		
-		var latestScheduledDate=array[0];
-		for (k=0;k<array.length;k++)
-        {		          	
-			temp=array[k];
-			if(temp.after(latestScheduledDate))
-			{
-				latestScheduledDate=temp;
-			} 
-		}
-		return latestScheduledDate;
-	}
-	return false;
-}
 
 function getRecordAddresses() { //optional capId parameter
 	var itemCap = capId
