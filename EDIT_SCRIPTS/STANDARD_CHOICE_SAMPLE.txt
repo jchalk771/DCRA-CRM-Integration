@@ -1,2 +1,1 @@
-Example: WTUA:AMS/Water/Storm Drain/Maintenance
-true ^ eval(getScriptText("WTUA:AMS/*/*/*"));
+true ^ eval(getScriptText("WTUA:Complaint/*/*/*"));
