@@ -20,12 +20,12 @@
 
 var rules = 
 {
-	"ServiceRequest/*/*/*": {
+	"Complaint/*/*/*": {
 		"Propogation_Rules": {
 			"Update_Core_WF" : true,
 			"Task": "Intake",
-			"Set_Status": "Note",
-			"Fire_WTUA_Event": true
+			"Set_Status": "Received",
+			"Fire_WTUA_Event": false
 		}
 	}
 };
