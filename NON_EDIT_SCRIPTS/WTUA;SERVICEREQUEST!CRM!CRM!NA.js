@@ -10,20 +10,20 @@ eval(getScriptText("INCLUDES_WF_RULES", null, false));
 
 logDebug("retrieved scripts");
 
-var rules = 
-{
-    "Code/*/*/*": [
-      {
-        "Propogation_Rules": null,
-        "Custom_Field_Map": {
-          "Your Full Name": "Complaintant",
-          "Your Mailing Address": "Complaintant Adress",
-          "Your Phone Number": "Complaintant Phone",
-          "Your Email Address": "Complaintant Email"
-        }
-      }
-    ]
-  };
+//var rules = 
+//{
+//   "Complaint/*/*/*": [
+//     {
+//        "Propogation_Rules": null,
+//        "Custom_Field_Map": {
+//          "Your Full Name": "Complaintant",
+//          "Your Mailing Address": "Complaintant Adress",
+//          "Your Phone Number": "Complaintant Phone",
+//          "Your Email Address": "Complaintant Email"
+//        }
+//      }
+//    ]
+//  };
 
 try {
     // automation on Workflow Work Order / Work Order
@@ -35,7 +35,7 @@ try {
     // add comment to records related to CRM shadow record
     if(wfTask=="Investigation" && wfStatus=="Comment") {
         // do stuff
-        var childRecs = getRelatedRecdsDown("ServiceRequest/*/*/*")
+        var childRecs = getRelatedRecdsDown("Complaint/*/*/*")
         for(c in childRecs) {
             
             var thisChildId = childRecs[c];
